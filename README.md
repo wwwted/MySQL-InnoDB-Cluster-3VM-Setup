@@ -192,7 +192,7 @@ Look at state of your cluster, see section "Get status of cluster" above.
 
 ##### Test failover using python application.
 
-There is a small python script than can be used to test what happens at failover, the script need the test database to be created before we can start it, connect to the R/W port of router:
+There is a small python [script](https://gist.github.com/wwwted/6f8d3cfa93a150b112d07895bf5a8722) than can be used to test what happens at failover, the script need the test database to be created before we can start it, connect to the R/W port of router:
 ```
 mysql -uroot -proot -P6446 -h127.0.0.1
 ``` 
