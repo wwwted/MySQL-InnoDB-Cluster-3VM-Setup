@@ -160,9 +160,18 @@ Bootstrap router from remote host (will pick up all configuration from remote ID
 ./mysql-router-8.0.12-linux-glibc2.12-x86-64bit/bin/mysqlrouter --bootstrap idcAdmin:idcAdmin@192.168.57.3:3306 -d myrouter
 ```
 Command above will create new folder myrouter with configuration and start script.
-Configuration file is: myrouter/mysqlrouter.conf
-Start Router by running: ./myrouter/start.sh
-The router log file is under: myrouter/log/mysqlrouter.log
+Configuration file is:
+```
+myrouter/mysqlrouter.conf
+```
+Start Router by running:
+```
+./myrouter/start.sh
+```
+The router log file is located under:
+```
+myrouter/log/mysqlrouter.log
+```
 
 ##### Connect to MySQL group 'via' Router
 ```
