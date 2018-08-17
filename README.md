@@ -100,18 +100,26 @@ If you have unwanted GTID's recored run "RESET MASTER" to make sure the MySQL in
 ### Create InnoDB Cluster
 
 ##### Check state of MySQL instances
-Install MySQL Shell on your prefered server for configuring IDc, does not have to be one of the production servers.
-
+Install MySQL Shell on your prefered server for configuring IDc, does not have to be one of the production servers running MySQL instances.
+```
 ./mysql-shell-8.0.12-linux-glibc2.12-x86-64bit/bin/mysqlsh
+```
 
 Check that the instances are a good candidates for joing the cluster:
 (Run commands below for all three instances)
+```
 dba.checkInstanceConfiguration('idcAdmin@192.168.57.3:3306',{password:'idcAdmin'});
+```
 If check instance spots any issues, solve these by running:
+```
 dba.configureInstance('idcAdmin@192.168.57.3:3306',{password:'idcAdmin'});
+```
 
-Added configuration options by "SET PERSIST" can be found file: mysqldata/mysqld-auto.cnf
+Configuration options by configureInstance ("SET PERSIST") can be found in file: mysqldata/mysqld-auto.cnf
+You can also view these changes in MySQL by running:
+```
 ./mysqlsrc/bin/mysql -uroot -S mysqldata/my.sock -e "select * from performance_schema.persisted_variables;
+```
 
 To see all variables and their source run: SELECT * FROM performance_schema.variables_info WHERE variable_source != 'COMPILED';
 
