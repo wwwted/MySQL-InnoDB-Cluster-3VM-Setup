@@ -253,6 +253,15 @@ Steps for recovering a stopped/failed/missing instance are easy, log into server
 ```
 Verify that old primary is now part of cluster again by looking at cluster.status() or data in table performance_schema.replication_group_members.
 
+##### Recover cluster from "status" "NO_QUORUM"
+If you kill nodes with '-9' option or pull power cabls on physical servers there is a risk that cluster will loose quorum and you need to manually restore cluster from the surviving node. This happens when you have only 2 nodes left in cluster and kill (kill -9) one of the nodes.
+
+Run command below on node (in my case node with IP 192.168.57.4) left in cluster:
+```
+cluster.forceQuorumUsingPartitionOf("idcAdmin@192.168.57.4:3306");
+```
+After this you need to start/restart the other nodes to join the cluster again.
+
 ### Note 1) Problems running script on MySQL due to new authentication plugin (only in MySQL 8)
 If you get an error like "Authentication plugin 'caching_sha2_password' is not supported" this means you have python connecter that does not support the new authentication plugn in MySQL 8, no worries, this is true for many 3rd party connectors at the moment and can be solved by configuring MySQL to use old password auth plugin and change plugin for user 'root'.
 
