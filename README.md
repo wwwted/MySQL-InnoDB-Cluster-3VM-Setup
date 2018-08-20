@@ -95,7 +95,7 @@ Make sure you have no executed GTID's before we start configuring the cluster.
 ./mysqlsrc/bin/mysql -uroot -S mysqldata/my.sock -e "select @@hostname, @@global.gtid_executed"
 ```
 If you have unwanted GTID's recored run "RESET MASTER" to make sure the MySQL instance is clean before joining the cluster.
-
+Remember that "RESET MASTER" will only "clean" the state of replication, any real changes done in database (like added users or changed passwords) are still persisted and need to be handled manually.
 
 ### Create InnoDB Cluster
 
@@ -115,7 +115,7 @@ If check instance spots any issues, solve these by running:
 dba.configureInstance('idcAdmin@192.168.57.3:3306',{password:'idcAdmin'});
 ```
 
-Configuration options by configureInstance ("SET PERSIST") can be found in file: mysqldata/mysqld-auto.cnf
+Configuration options added by configureInstance ("SET PERSIST") can be found in file: mysqldata/mysqld-auto.cnf
 You can also view these changes in MySQL by running:
 ```
 ./mysqlsrc/bin/mysql -uroot -S mysqldata/my.sock -e "select * from performance_schema.persisted_variables;
