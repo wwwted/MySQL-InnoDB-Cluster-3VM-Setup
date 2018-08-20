@@ -254,7 +254,7 @@ Steps for recovering a stopped/failed/missing instance are easy, log into server
 Verify that old primary is now part of cluster again by looking at cluster.status() or data in table performance_schema.replication_group_members.
 
 ##### Recover cluster from "status" "NO_QUORUM"
-If you kill nodes with '-9' option or pull power cabls on physical servers there is a risk that cluster will loose quorum and you need to manually restore cluster from the surviving node. This happens when you have only 2 nodes left in cluster and kill (kill -9) one of the nodes.
+If you kill nodes with '-9' option or pull power cables on physical servers there is a risk that the cluster will loose quorum and you need to manually restore cluster from the surviving node. Loss of qourum will happen when you have only 2 nodes left (in a 3 node setup) in cluster and kill (kill -9) one of the nodes. If you want to read more on loss of quorum and how this is handled in group replication read our [manual](https://dev.mysql.com/doc/refman/8.0/en/group-replication-network-partitioning.html)
 
 Run command below on node (in my case node with IP 192.168.57.4) left in cluster:
 ```
