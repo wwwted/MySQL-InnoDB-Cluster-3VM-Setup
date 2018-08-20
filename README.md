@@ -262,6 +262,32 @@ cluster.forceQuorumUsingPartitionOf("idcAdmin@192.168.57.4:3306");
 ```
 After this you need to start/restart the other nodes to join the cluster again.
 
+### Monitoring InnoDB CLuster
+As we have already tried out there are ways to monitor InnoDB Cluster and the state via eather via the cluster.status() command or by quering the performance_schema.replication_group_members table.
+
+MySQL Enterprise Monitor also have monitoring of InnoDB Cluster so you can track the state of your cluster and get alerts if there are problems.
+
+##### Performance Schema
+```
+select * from performance_schema.replication_group_members\G
+select * from performance_schema.replication_group_member_stats\G
+select * from performance_schema.replication_connection_status\G
+```
+##### Configuration
+```
+show global variables like '%group_repl%';
+```
+
+##### Who is primary
+```
+show global status like 'group%';
+```
+
+##### Who has the most GTID applied:
+```
+select @@global.gtid_executed;
+```
+
 ### Note 1) Problems running script on MySQL due to new authentication plugin (only in MySQL 8)
 If you get an error like "Authentication plugin 'caching_sha2_password' is not supported" this means you have python connecter that does not support the new authentication plugn in MySQL 8, no worries, this is true for many 3rd party connectors at the moment and can be solved by configuring MySQL to use old password auth plugin and change plugin for user 'root'.
 
