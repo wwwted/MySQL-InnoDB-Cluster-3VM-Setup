@@ -60,7 +60,7 @@ And also run: hostnamectl set-hostname <idc-1>
 Install and start MySQL on all 3 servers, use latest version (8.0.12).
 You can do this manually by using our tar packages or the repository on your OS.
 Installing MySQL is explained here: https://dev.mysql.com/doc/refman/8.0/en/installing.html
-I will do a manual installation of MySQL bellow.
+I will do a manual installation of MySQL below.
 
 ##### MySQL configuration file
 ```
