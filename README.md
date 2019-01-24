@@ -67,7 +67,6 @@ I will do a manual installation of MySQL below.
 [mysqld] 
 server-id=3310
 datadir=/home/ted/mysqldata
-socket=/home/ted/mysqldata/my.sock 
 pid-file=/home/ted/mysqldata/my.pid 
 log_bin=binlog
 default_authentication_plugin=mysql_native_password
@@ -88,7 +87,7 @@ mkdir /home/ted/mysqldata
 
 ### Configure admin user for InnoDB Cluster
 ```
-./mysqlsrc/bin/mysql -uroot -S mysqldata/my.sock -e "SET SQL_LOG_BIN=0; CREATE USER 'idcAdmin'@'%' IDENTIFIED BY 'idcAdmin'; GRANT ALL ON *.* TO 'idcAdmin'@'%' WITH GRANT OPTION";
+./mysqlsrc/bin/mysql -uroot -e "SET SQL_LOG_BIN=0; CREATE USER 'idcAdmin'@'%' IDENTIFIED BY 'idcAdmin'; GRANT ALL ON *.* TO 'idcAdmin'@'%' WITH GRANT OPTION";
 ```
 Make sure you have no executed GTID's before we start configuring the cluster.
 ```
@@ -118,7 +117,7 @@ dba.configureInstance('idcAdmin@192.168.57.3:3306',{password:'idcAdmin'});
 Configuration options added by configureInstance ("SET PERSIST") can be found in file: mysqldata/mysqld-auto.cnf
 You can also view these changes in MySQL by running:
 ```
-./mysqlsrc/bin/mysql -uroot -S mysqldata/my.sock -e "select * from performance_schema.persisted_variables;
+./mysqlsrc/bin/mysql -uroot -e "select * from performance_schema.persisted_variables;
 ```
 
 To see all variables and their source run: SELECT * FROM performance_schema.variables_info WHERE variable_source != 'COMPILED';
