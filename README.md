@@ -91,7 +91,7 @@ mkdir /home/ted/mysqldata
 ```
 Make sure you have no executed GTID's before we start configuring the cluster.
 ```
-./mysqlsrc/bin/mysql -uroot -S mysqldata/my.sock -e "select @@hostname, @@global.gtid_executed"
+./mysqlsrc/bin/mysql -uroot -e "select @@hostname, @@global.gtid_executed"
 ```
 If you have unwanted GTID's recored run "RESET MASTER" to make sure the MySQL instance is clean before joining the cluster.
 Remember that "RESET MASTER" will only "clean" the state of replication, any real changes done in database (like added users or changed passwords) are still persisted and need to be handled manually.
