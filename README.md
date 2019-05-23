@@ -67,7 +67,6 @@ I will do a manual installation of MySQL below.
 [mysqld] 
 server-id=3310
 datadir=/home/ted/mysqldata
-socket=/home/ted/mysqldata/my.sock 
 pid-file=/home/ted/mysqldata/my.pid 
 log_bin=binlog
 default_authentication_plugin=mysql_native_password
@@ -88,11 +87,11 @@ mkdir /home/ted/mysqldata
 
 ### Configure admin user for InnoDB Cluster
 ```
-./mysqlsrc/bin/mysql -uroot -S mysqldata/my.sock -e "SET SQL_LOG_BIN=0; CREATE USER 'idcAdmin'@'%' IDENTIFIED BY 'idcAdmin'; GRANT ALL ON *.* TO 'idcAdmin'@'%' WITH GRANT OPTION";
+./mysqlsrc/bin/mysql -uroot -e "SET SQL_LOG_BIN=0; CREATE USER 'idcAdmin'@'%' IDENTIFIED BY 'idcAdmin'; GRANT ALL ON *.* TO 'idcAdmin'@'%' WITH GRANT OPTION";
 ```
 Make sure you have no executed GTID's before we start configuring the cluster.
 ```
-./mysqlsrc/bin/mysql -uroot -S mysqldata/my.sock -e "select @@hostname, @@global.gtid_executed"
+./mysqlsrc/bin/mysql -uroot -e "select @@hostname, @@global.gtid_executed"
 ```
 If you have unwanted GTID's recored run "RESET MASTER" to make sure the MySQL instance is clean before joining the cluster.
 Remember that "RESET MASTER" will only "clean" the state of replication, any real changes done in database (like added users or changed passwords) are still persisted and need to be handled manually.
@@ -118,7 +117,7 @@ dba.configureInstance('idcAdmin@192.168.57.3:3306',{password:'idcAdmin'});
 Configuration options added by configureInstance ("SET PERSIST") can be found in file: mysqldata/mysqld-auto.cnf
 You can also view these changes in MySQL by running:
 ```
-./mysqlsrc/bin/mysql -uroot -S mysqldata/my.sock -e "select * from performance_schema.persisted_variables;
+./mysqlsrc/bin/mysql -uroot -e "select * from performance_schema.persisted_variables;
 ```
 
 To see all variables and their source run: SELECT * FROM performance_schema.variables_info WHERE variable_source != 'COMPILED';
@@ -280,6 +279,7 @@ show global variables like '%group_repl%';
 
 ##### Who is primary
 ```
+SELECT * FROM performance_schema.replication_group_members WHERE MEMBER_ROLE='PRIMARY';
 show global status like 'group%';
 ```
 
@@ -297,26 +297,7 @@ Let's first update the configuration and add the line:
 ```
 default_authentication_plugin=mysql_native_password
 ```
-to all instances (the configuration are located at ~$HOME/mysql-sandboxes/$PORT/my.cnf. Make sure you update all 3 nodes (in folders 3310, 3320 and 3330).
-
-Once you have added this line the the configuraton of all instances start the mysql shell
-```
-mysqlsh
-```
-and restart the MySQL instances one at a time by running:
-```
-mysqlsh> dba.stopSandboxInstance(3310);
-mysqlsh> dba.startSandboxInstance(3310);
-```
-Password of all MySQL instances is 'root', this is needed to stop the MySQL instance.
-
-Look at status of your cluster after each node restart, what is happening with the Primary/RW Role?
-```
-mysqlsh> \c 'root'@127.0.0.1:3320
-mysqlsh> cluster = dba.getCluster();
-mysqlsh> cluster.status();
-```
-You need to connect to a running MySQL instance between restarts to see status of the cluster.
+to all MySQL instances and restart them.
 
 Next step is to update our 'root' user to use old plugin, start the mysql client:
 ```
