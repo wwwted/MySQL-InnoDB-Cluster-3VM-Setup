@@ -113,7 +113,7 @@ If check instance spots any issues, solve these by running:
 ```
 dba.configureInstance('idcAdmin@192.168.57.3:3306',{password:'idcAdmin'});
 ```
-if you do not want to automate and not use interactive options use:
+if you want to automate/script and not use interactive options add options:
 ```
 dba.configureInstance('idcAdmin@192.168.57.3:3306',{password:'idcAdmin',interactive:false,restart:true});
 ```
