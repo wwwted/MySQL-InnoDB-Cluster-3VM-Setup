@@ -113,7 +113,10 @@ If check instance spots any issues, solve these by running:
 ```
 dba.configureInstance('idcAdmin@192.168.57.3:3306',{password:'idcAdmin'});
 ```
-
+if you do not want to automate and not use interactive options use:
+```
+dba.configureInstance('idcAdmin@192.168.57.3:3306',{password:'idcAdmin',interactive:false,restart:true});
+```
 Configuration options added by configureInstance ("SET PERSIST") can be found in file: mysqldata/mysqld-auto.cnf
 You can also view these changes in MySQL by running:
 ```
