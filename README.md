@@ -1,6 +1,6 @@
 **[Back to MySQL HOWTO's](https://github.com/wwwted/MySQL-HOWTOs)**
 
-# MySQL-InnoDB-Cluster-3VM-Setup
+# MySQL InnoDB Cluster 3VM Setup
 ![](./img/Mysql_idc.jpg)
 
 In this exercise we will build and test a InnoDB Cluster on 3 servers, virtual or real it's your choice.
