@@ -117,7 +117,7 @@ dba.configureInstance('idcAdmin@192.168.57.3:3306',{password:'idcAdmin'});
 Configuration options added by configureInstance ("SET PERSIST") can be found in file: mysqldata/mysqld-auto.cnf
 You can also view these changes in MySQL by running:
 ```
-./mysqlsrc/bin/mysql -uroot -e "select * from performance_schema.persisted_variables;
+./mysqlsrc/bin/mysql -uroot -e "select * from performance_schema.persisted_variables"
 ```
 
 To see all variables and their source run: SELECT * FROM performance_schema.variables_info WHERE variable_source != 'COMPILED';
