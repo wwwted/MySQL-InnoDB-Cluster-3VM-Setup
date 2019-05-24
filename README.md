@@ -57,7 +57,7 @@ And also run: hostnamectl set-hostname <idc-1>
 
 
 ### Install MySQL
-Install and start MySQL on all 3 servers, use latest version (8.0.12).
+Install and start MySQL on all 3 servers, use latest version (8.0.15).
 You can do this manually by using our tar packages or the repository on your OS.
 Installing MySQL is explained here: https://dev.mysql.com/doc/refman/8.0/en/installing.html
 I will do a manual installation of MySQL below.
@@ -75,9 +75,9 @@ I have opted to not use the new authentication method since many third party con
 
 ##### Install and start MySQL daemon
 ```
-tar xf mysql-8.0.12-linux-glibc2.12-x86_64.tar.xz
+tar xf mysql-8.0.15-linux-glibc2.12-x86_64.tar.xz
 ln -s /home/ted/mysql-8.0.12-linux-glibc2.12-x86_64 mysqlsrc
-rm -fr mysql-8.0.12-linux-glibc2.12-x86_64.tar.xz
+rm -fr mysql-8.0.15-linux-glibc2.12-x86_64.tar.xz
 mkdir /home/ted/mysqldata
 /home/ted/mysqlsrc/bin/mysqld --initialize-insecure --datadir=/home/ted/mysqldata --user=ted --basedir=/home/ted/mysqlsrc
 /home/ted/mysqlsrc/bin/mysqld_safe --defaults-file=/home/ted/my.cnf --ledir=/home/ted/mysqlsrc/bin &
@@ -101,7 +101,7 @@ Remember that "RESET MASTER" will only "clean" the state of replication, any rea
 ##### Check state of MySQL instances
 Install MySQL Shell on your prefered server for configuring IDc, does not have to be one of the production servers running MySQL instances.
 ```
-./mysql-shell-8.0.12-linux-glibc2.12-x86-64bit/bin/mysqlsh
+./mysql-shell-8.0.15-linux-glibc2.12-x86-64bit/bin/mysqlsh
 ```
 
 Check that the instances are a good candidates for joing the cluster:
@@ -159,7 +159,7 @@ More momitoring data around GR that can be populated in sys schema: https://gist
 #### Configure and start Router (running on application server)
 Bootstrap router from remote host (will pick up all configuration from remote IDc node)
 ```
-./mysql-router-8.0.12-linux-glibc2.12-x86-64bit/bin/mysqlrouter --bootstrap idcAdmin:idcAdmin@192.168.57.3:3306 -d myrouter
+mysqlrouter --bootstrap idcAdmin:idcAdmin@192.168.57.3:3306 -d myrouter
 ```
 Command above will create new folder myrouter with configuration and start script.
 Configuration file is:
