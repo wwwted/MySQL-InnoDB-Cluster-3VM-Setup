@@ -311,6 +311,21 @@ cluster = dba.rebootClusterFromCompleteOutage();
 ```
 You might see a error message saying you are trying to start a cluster from a node that is not the most updated one, in the error message you will then see something like "Please use the most up to date instance: '192.168.57.5:3306'", then you should login to this MySQL node and re-run command above.
 
+##### Upgrade InnoDB Cluster
+
+
+
+##### Set new PRIMARY or test multi-primary mode
+Changing PRIMARY node in the cluster can be done by running:
+```
+cluster.setPrimaryInstance('192.168.57.5:3306');
+```
+You can also change between single-primary and multi-primary by running:
+```
+cluster.switchToMultiPrimaryMode();
+cluster.switchToSinglePrimaryMode('192.168.57.4:3306');
+```
+
 ### Note 1) Problems running script on MySQL due to new authentication plugin (only in MySQL 8)
 If you get an error like "Authentication plugin 'caching_sha2_password' is not supported" this means you have python connecter that does not support the new authentication plugn in MySQL 8, no worries, this is true for many 3rd party connectors at the moment and can be solved by configuring MySQL to use old password auth plugin and change plugin for user 'root'.
 
