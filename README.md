@@ -264,7 +264,9 @@ cluster.forceQuorumUsingPartitionOf("idcAdmin@192.168.57.4:3306");
 ```
 After this you need to start/restart the other nodes to join the cluster again.
 
-### Monitoring InnoDB Cluster
+### Operating InnoDB Cluster
+
+#### Monitoring InnoDB Cluster
 There are many ways to monitor InnoDB Cluster, we have already looked at the state via the cluster.status() command using MySQL Shell and by quering the performance_schema.replication_group_members table using the MySQL Client.
 
 MySQL Enterprise Monitor also have many monitoring and alarm features for InnoDB Cluster so you can track the state of your cluster and get alerts if there are problems. MySQL Enterprise Monitor will also visualize the cluster and show the states of the nodes.
@@ -290,9 +292,7 @@ show global status like 'group%';
 ```
 select @@global.gtid_executed;
 ```
-### Good to know
-
-##### Start/Stop cluster
+#### Start/Stop cluster
 Stopping cluster is done by stopping all the MySQL nodes, log into each MySQL node and run:
 ```
 ./mysqlsrc/bin/mysqladmin -uroot -S/tmp/mysql.sock shutdown
