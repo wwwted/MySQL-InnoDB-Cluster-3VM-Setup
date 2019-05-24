@@ -264,6 +264,25 @@ cluster.forceQuorumUsingPartitionOf("idcAdmin@192.168.57.4:3306");
 ```
 After this you need to start/restart the other nodes to join the cluster again.
 
+##### Start/stop completer cluster
+Stopping cluster is done by stopping all the MySQL nodes, log into each MySQL node and run:
+```
+./mysqlsrc/bin/mysqladmin -uroot -S/tmp/mysql.sock shutdown
+```
+After all nodes are stopped, start them using:
+```
+/home/ted/mysqlsrc/bin/mysqld_safe --defaults-file=/home/ted/my.cnf --ledir=/home/ted/mysqlsrc/bin &
+```
+After all MySQL nodes are started, start mysql shell and connect to one of the nodes:
+```
+mysqlsh -uidcAdmin -pidcAdmin -h192.168.57.3 -P3306
+```
+and run:
+```
+cluster = dba.rebootClusterFromCompleteOutage();
+```
+You might see a error message saying you are trying to start a cluster from a node that is not the most updated one, in the error message you will then see something like "Please use the most up to date instance: '192.168.57.5:3306'", then you should login to this MySQL node and re-run command above.
+
 ### Monitoring InnoDB CLuster
 There are many ways to monitor InnoDB Cluster, we have already looked at the state via the cluster.status() command using MySQL Shell and by quering the performance_schema.replication_group_members table using the MySQL Client.
 
