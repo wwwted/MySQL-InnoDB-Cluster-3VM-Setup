@@ -346,7 +346,7 @@ cluster.switchToMultiPrimaryMode();
 cluster.switchToSinglePrimaryMode('192.168.57.4:3306');
 ```
 
-##### using MySQL Events
+##### Using MySQL Events
 Using MySQL Event Scheduler with InnoDB Cluster need to some extra care. When you create the events (on primary server) the events on the secondaries will be set in state "SLAVESIDE_DISABLED". If everything worked as it should when shifting primiary the events should be enabled on new primary and set to "SLAVESIDE_DISABLED" on old primary, today (8.0.16) this is not done and you need to manually handle this, this is explained in the manuals [here](https://dev.mysql.com/doc/refman/8.0/en/replication-features-invoked.html).
 
 I have created a [script](https://github.com/wwwted/MySQL-InnoDB-Cluster-3VM-Setup/blob/master/tools/event_job.sh) in the tools folder that automates this task. The script is not a solution for all scenarios, it will only make sure that events are only active and primary node, on secondary nodes the event scheduler is disabled.
