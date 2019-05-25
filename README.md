@@ -349,7 +349,7 @@ cluster.switchToSinglePrimaryMode('192.168.57.4:3306');
 ##### using MySQL Events
 Using MySQL Event Scheduler with InnoDB Cluster need to some extra care. When you create the events (on primary server) the events on the secondaries will be set in state "SLAVESIDE_DISABLED". If everything worked as it should when shifting primiary the events should be enabled on new primary and set to "SLAVESIDE_DISABLED" on old primary, today (8.0.16) this is not done and you need to manually handle this, this is explained in the manuals here: https://dev.mysql.com/doc/refman/8.0/en/replication-features-invoked.html
 
-I have created a [script](../tools/event_job.sh) in the tools folder that automates this task.
+I have created a [script](https://github.com/wwwted/MySQL-InnoDB-Cluster-3VM-Setup/blob/master/tools/event_job.sh) in the tools folder that automates this task.
 
 ### Note 1) Problems running script on MySQL due to new authentication plugin (only in MySQL 8)
 If you get an error like "Authentication plugin 'caching_sha2_password' is not supported" this means you have python connecter that does not support the new authentication plugn in MySQL 8, no worries, this is true for many 3rd party connectors at the moment and can be solved by configuring MySQL to use old password auth plugin and change plugin for user 'root'.
