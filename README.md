@@ -325,7 +325,7 @@ Run below operastions on all nodes, one-by-one, start with secondaries and take 
  /home/ted/mysql-8.0.16-linux-glibc2.12-x86_64/bin/mysqld_safe --defaults-file=/home/ted/my.cnf --ledir=/home/ted/mysql-8.0.16-linux-glibc2.12-x86_64/bin &
 ```
 
-If you have MySQL 8.0.15 or older you also need to run mysql_upgrade (procedure below for yum and systemctl installations):
+If you have MySQL 8.0.15 or older version of MySQL you also need to run mysql_upgrade (procedure below for yum and systemctl installations):
 - mysql> set persist group_replication_start_on_boot=0;
 - systemctl stop mysqld
 - yum update mysql-community-server mysql-shell
