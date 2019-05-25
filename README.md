@@ -312,7 +312,27 @@ cluster = dba.rebootClusterFromCompleteOutage();
 You might see a error message saying you are trying to start a cluster from a node that is not the most updated one, in the error message you will then see something like "Please use the most up to date instance: '192.168.57.5:3306'", then you should login to this MySQL node and re-run command above.
 
 ##### Upgrade InnoDB Cluster
+Upgrading InnoDB Cluster is done by restarting the nodes one by one and upgrading the software.
+The procedure is called rolling restart and works like:
+- Stop MySQL
+- Upgrade software
+- Start MySQL
 
+For our installation it's enough to download MySQL 8.0.16 and start the new binary. MySQL 8.0.16 handle the upgrade of meta data in the mysqld process so no need to run mysql_upgrade anymore.
+Run below operastions on all nodes, one-by-one, start with secondaries and take primary last:
+```
+ ./mysqlsrc/bin/mysql -uroot -S/tmp/mysql.sock -e"shutdown"
+ /home/ted/mysql-8.0.16-linux-glibc2.12-x86_64/bin/mysqld_safe --defaults-file=/home/ted/my.cnf --ledir=/home/ted/mysql-8.0.16-linux-glibc2.12-x86_64/bin &
+```
+
+If you have MySQL 8.0.15 or older you also need to run mysql_upgrade (procedure below for yum and systemctl installations):
+- mysql> set persist group_replication_start_on_boot=0;
+- systemctl stop mysqld
+- yum update mysql-community-server mysql-shell
+- systemctl start mysqld
+- mysql_upgrade
+- mysql> set persist group_replication_start_on_boot=1;
+- mysql> restart;
 
 
 ##### Set new PRIMARY or test multi-primary mode
