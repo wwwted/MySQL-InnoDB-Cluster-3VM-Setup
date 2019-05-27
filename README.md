@@ -372,7 +372,7 @@ cluster.setPrimaryInstance('192.168.57.5:3306');
 ```
  Now you will see that the new primary still have state "SLAVESIDE_DISABLED" for all events and old primary (now secondary) is still trying to run the event (events are enabled) and you will see error in the MySQL error log like "The MySQL server is running with the --super-read-only option so it cannot execute this statement".
 
-Now it's time to run the script to solve the problems described above:
+Now it's time to run the [script](https://github.com/wwwted/MySQL-InnoDB-Cluster-3VM-Setup/blob/master/tools/event_job.sh) to solve the problems described above:
 ```
 bash$ event_job.sh
 PRIMARY(192.168.57.5:3306): Enable all the events and start event scheduler
