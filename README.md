@@ -370,15 +370,15 @@ Let's change primary node (look at cluster.status() and pick one of the secondar
 ```
 cluster.setPrimaryInstance('192.168.57.5:3306');
 ```
- Now you should see that new primary still have state "SLAVESIDE_DISABLED" and old primary (now secondary) is still trying to run the event and you will see error in the MySQL error log like "The MySQL server is running with the --super-read-only option so it cannot execute this statement".
+ Now you will see that the new primary still have state "SLAVESIDE_DISABLED" for all events and old primary (now secondary) is still trying to run the event (events are enabled) and you will see error in the MySQL error log like "The MySQL server is running with the --super-read-only option so it cannot execute this statement".
 
-Now it's time to run the script:
+Now it's time to run the script to solve the problems described above:
 ```
 bash$ event_job.sh
 PRIMARY(192.168.57.5:3306): Enable all the events and start event scheduler
 SECONDARY(192.168.57.3:3306): Disable the event scheduler
 ```
-The script enabled all events and started the event scheduler on the new primary and disabled the event scheduler on old primary. It's safe to run the script multiple times, first time it will only disable the event scheduler on secondaries (if there has not been a swithover/failover).
+As the output shows, the script enable all events and starts the event scheduler on the new primary, next step is to disabled the event scheduler on old primary. It's safe to run the script multiple times, first time it will only disable the event scheduler on secondaries (if there has not been a swithover/failover).
 
 ### Note 1) Problems running script on MySQL due to new authentication plugin (only in MySQL 8)
 If you get an error like "Authentication plugin 'caching_sha2_password' is not supported" this means you have python connecter that does not support the new authentication plugn in MySQL 8, no worries, this is true for many 3rd party connectors at the moment and can be solved by configuring MySQL to use old password auth plugin and change plugin for user 'root'.
