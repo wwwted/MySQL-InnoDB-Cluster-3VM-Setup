@@ -137,7 +137,7 @@ cluster.status();
 ```
 
 ##### Dedicated Network for GR communication
-We recomend that you use a 10Gigabit network for InnoDB Cluster.
+We recomend that you use a 10 Gigabit network for InnoDB Cluster.
 If you want, you can define a dedicated network for the group replication traffic, this is done by specifying options localAddress and groupSeeds when creating the cluster and adding nodes like:
 ```
 cluster=dba.createCluster("mycluster",{localAddress:'10.0.2.6:33061',groupSeeds:'10.0.2.6:33061,10.0.2.7:33061,10.0.2.8:33061'});
