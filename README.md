@@ -158,7 +158,7 @@ group_replication_consistency=BEFORE_ON_PRIMARY_FAILOVER
 
 If you want to configure this when creating your cluster and adding nodes use options bellow:
 ```
-{exitStateAction:OFFLINE_MODE,autoRejoinTries=20,consistency:BEFORE_ON_PRIMARY_FAILOVER}
+{exitStateAction:'OFFLINE_MODE',autoRejoinTries:'20',consistency:'BEFORE_ON_PRIMARY_FAILOVER'}
 ```
 ExitStateAction "OFFLINE_MODE" was added in 8.0.18. If you are running earlier versions of MySQL, use the default ExitStateActions setting if all access to cluser is done via MySQL Router. If you are accessing data nodes directly consider using "ABORT_SERVER" to avoid reading data from nodes that are expelled from the group.
 
