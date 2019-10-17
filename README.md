@@ -146,8 +146,8 @@ cluster.addInstance('idcAdmin@192.168.57.5:3306',{localAddress:'10.0.2.8:33061',
 ```
 In above example I created one more network (10.0.2.0/24) for my virtual machines and used this network for group replication traffic only.
 
-##### Configuration recomentations
-In general we recommend to use default settings. That said there are circumstances where you mithg want to make some custom settings.
+##### Configuration recommendations
+In general we recommend to use default settings. That said there are circumstances where you might want to make some custom settings.
 
 For most cases I prefer to have bellow settings for InnoDB cluster:
 ```
@@ -160,13 +160,14 @@ If you want to configure this when creating your cluster and adding nodes use op
 ```
 {exitStateAction:OFFLINE_MODE,autoRejoinTries=20,consistency:BEFORE_ON_PRIMARY_FAILOVER}
 ```
+ExitStateAction "OFFLINE_MODE" was added in 8.0.18. If you are running earlier versions of MySQL, use the default ExitStateActions setting if all access to cluser is done via MySQL Router. If you are accessing data nodes directly consider using "ABORT_SERVER" to avoid reading data from nodes that are expelled from the group.
 
 Some settings might depend on your application workload like support for large transactions, then you might want to ture:
 ```
 group_replication_transaction_size_limit (default ~143MB)
 group_replication_member_expel_timeout (expelTimeout)
 ```
-
+Read consistency can be configured on global or session level, for more information on how this works I recommend reading this [blog](https://mysqlhighavailability.com/group-replication-consistent-reads/) by Nuno Carvalho.
 
 ##### Get status of cluster
 Connect IDc to a specific MySQL instance using shell:
