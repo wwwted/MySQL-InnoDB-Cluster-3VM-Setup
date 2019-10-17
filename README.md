@@ -162,7 +162,7 @@ If you want to configure this when creating your cluster and adding nodes use op
 ```
 ExitStateAction "OFFLINE_MODE" was added in 8.0.18. If you are running earlier versions of MySQL, use the default ExitStateActions setting if all access to cluser is done via MySQL Router. If you are accessing data nodes directly consider using "ABORT_SERVER" to avoid reading data from nodes that are expelled from the group.
 
-Some settings might depend on your application workload like support for large transactions, then you might want to ture:
+Some settings might depend on your application workload like support for large transactions, then you might want to tune:
 ```
 group_replication_transaction_size_limit (default ~143MB)
 group_replication_member_expel_timeout (expelTimeout)
