@@ -136,6 +136,38 @@ cluster.addInstance("idcAdmin@192.168.57.5:3306",{password:'idcAdmin'});
 cluster.status();
 ```
 
+##### Dedicated Network for GR communication
+We recomend that you use a 10Gigabit network for InnoDB Cluster.
+If you want, you can define a dedicated network for the group replication traffic, this is done by specifying options localAddress and groupSeeds when creating the cluster and adding nodes like:
+```
+cluster=dba.createCluster("mycluster",{localAddress:'10.0.2.6:33061',groupSeeds:'10.0.2.6:33061,10.0.2.7:33061,10.0.2.8:33061'});
+cluster.addInstance('idcAdmin@192.168.57.4:3306',{localAddress:'10.0.2.7:33061',groupSeeds:'10.0.2.6:33061,10.0.2.7:33061,10.0.2.8:33061'});
+cluster.addInstance('idcAdmin@192.168.57.5:3306',{localAddress:'10.0.2.8:33061',groupSeeds:'10.0.2.6:33061,10.0.2.7:33061,10.0.2.8:33061'});
+```
+In above example I created one more network (10.0.2.0/24) for my virtual machines and used this network for group replication traffic only.
+
+##### Configuration recomentations
+In general we recommend to use default settings. That said there are circumstances where you mithg want to make some custom settings.
+
+For most cases I prefer to have bellow settings for InnoDB cluster:
+```
+group_replication_autorejoin_tries=20
+group_replication_exit_state_action=OFFLINE_MODE
+group_replication_consistency=BEFORE_ON_PRIMARY_FAILOVER
+```
+
+If you want to configure this when creating your cluster and adding nodes use options bellow:
+```
+{exitStateAction:OFFLINE_MODE,autoRejoinTries=20,consistency:BEFORE_ON_PRIMARY_FAILOVER}
+```
+
+Some settings might depend on your application workload like support for large transactions, then you might want to ture:
+```
+group_replication_transaction_size_limit (default ~143MB)
+group_replication_member_expel_timeout (expelTimeout)
+```
+
+
 ##### Get status of cluster
 Connect IDc to a specific MySQL instance using shell:
 ```
@@ -151,15 +183,15 @@ From performance_schema:
 ```
 SELECT * FROM performance_schema.replication_group_members\G
 ```
-
 More momitoring data around GR that can be populated in sys schema: https://gist.github.com/lefred/77ddbde301c72535381ae7af9f968322
+
 
 ### MySQL Router
 
 #### Configure and start Router (running on application server)
 Bootstrap router from remote host (will pick up all configuration from remote IDc node)
 ```
-mysqlrouter --bootstrap idcAdmin:idcAdmin@192.168.57.3:3306 -d myrouter
+mysqlrouter --bootstrap idcAdmin:idcAdmin@192.168.57.3:3306 --conf-use-gr-notifications --directory myrouter
 ```
 Command above will create new folder myrouter with configuration and start script.
 Configuration file is:
