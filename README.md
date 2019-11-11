@@ -178,6 +178,7 @@ And run:
 ```
 cluster = dba.getCluster();
 cluster.status();
+cluster.options();
 ```
 
 From performance_schema:
