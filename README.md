@@ -152,6 +152,7 @@ In general we recommend to use default settings. That said there are circumstanc
 For most cases I prefer to have bellow settings for InnoDB cluster:
 ```
 group_replication_autorejoin_tries=20
+group_replication_member_expel_timeout=5
 group_replication_exit_state_action=OFFLINE_MODE
 group_replication_consistency=BEFORE_ON_PRIMARY_FAILOVER
 ```
@@ -167,6 +168,8 @@ Some settings might depend on your application workload like support for large t
 group_replication_transaction_size_limit (default ~143MB)
 group_replication_member_expel_timeout (expelTimeout)
 ```
+Edit: Above is not needed as of 8.0.16, support for large transactions was added into MySQL 8.0.16, more detals [here](https://mysqlserverteam.com/mysql-innodb-cluster-whats-new-in-the-8-0-16-release/).
+
 Read consistency can be configured on global or session level, for more information on how this works I recommend reading this [blog](https://mysqlhighavailability.com/group-replication-consistent-reads/) by Nuno Carvalho.
 
 ##### Get status of cluster
