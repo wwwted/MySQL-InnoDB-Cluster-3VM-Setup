@@ -18,7 +18,7 @@ Further reading:
 - https://dev.mysql.com/doc/refman/8.0/en/mysql-innodb-cluster-userguide.html
 - https://dev.mysql.com/doc/refman/8.0/en/mysql-innodb-cluster-sandbox-deployment.html
 
-This workshop was built for MySQL 8 but should work well for MySQL 5.7 as well. Note that MySQL Router 8 and MySQL Shell 8 works for MySQL 5.7 also, I highly recomend using latest versions of MySQL Shell and MySQL Router for any deployments of InnoDB Cluster.
+This workshop was built for MySQL 8.0, I highly recomend using latest versions of MySQL Shell and MySQL Router for any deployments of InnoDB Cluster.
 
 
 ### Prepare your hosts
