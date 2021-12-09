@@ -7,7 +7,7 @@ In this exercise we will build and test a InnoDB Cluster on 3 servers, virtual o
 
 You can use any technology you like, I use VirtualBox in this workshop.
 I'm using VirtualBox and an minimal CentOS image (CentOS-7-x86_64-Minimal-1611.iso)
-Using VirtialBox I also set up a host-only netork to be shared between the vms that host one MySQL instance each.
+Using VirtualBox I also set up a host-only netork to be shared between the vms that host one MySQL instance each.
 
 More tutorials on the same topic:
 - https://mysqlserverteam.com/mysql-innodb-cluster-real-world-cluster-tutorial-for-oel-fedora-rhel-and-centos/
